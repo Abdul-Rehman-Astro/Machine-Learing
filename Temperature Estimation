@@ -1,0 +1,56 @@
+#Linear Regression Model for Temperature Estimation
+
+import numpy as np
+import sklearn
+import matplotlib.pyplot as plt
+
+# Y = mX   +  c
+# Y = 1.8*c + 32
+
+X= list(range(0,10000)) # Celsius 
+print(f'X:{X}')
+Y = [1.8 * i +32 for i in X ]  # farenheite
+print(f'Y:{Y}')
+
+plt.plot(X,Y,'-r')
+plt.xlabel("Celsius ")
+plt.ylabel(" farenheite")
+plt.show()
+
+-------------------------------------------------------------------------------------------
+
+import random 
+Y = [1.8 * i +32 + random.randint(-1000,+1000) for i in X ]  # farenheite
+
+plt.plot(X,Y,'-r')
+plt.xlabel("Celsius ")
+plt.ylabel(" farenheite")
+
+plt.show()
+----------------------------------------------------------------------------------------------------
+X = np.array(X).reshape(-1,1)
+Y = np.array(Y).reshape(-1,1)
+# print(f'X:{X}')
+# print(f'Y:{Y}')
+
+from sklearn import model_selection
+from sklearn import linear_model
+XTrain, XTest, YTrain, YTest =model_selection.train_test_split(X,Y,test_size=0.2)
+# print(XTrain.shape)
+model= linear_model.LinearRegression()
+model.fit(XTrain,YTrain)
+
+accuracy = model.score(XTest,YTest)
+print(f'accuracy:{accuracy*100}')
+
+print(f'Intercept:{model.intercept_}')
+
+print(f'Cofficient:{model.coef_}')
+
+
+plt.plot(X,Y,'-r')
+plt.xlabel("Celsius ")
+plt.ylabel(" farenheite")
+
+plt.show()
+------------------------------------------------------------------------------------------------------
